@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Ángel García de la Chica Herrera <angel.garcia@sygel.es>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template
+        id="so_report_hide_lines_report_saleorder_document"
+        name="so.report.hide.lines.report.saleorder.document"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <!--
+            In Odoo 18 the line loop uses `lines_to_report` and each row is a <tr>
+            directly inside the t-foreach. We target the <tr> that renders line content
+            and add show_line_report as an additional condition.
+        -->
+        <xpath expr="//t[@t-foreach='lines_to_report']/tr" position="attributes">
+            <attribute name="t-if">line.show_line_report</attribute>
+        </xpath>
+    </template>
+</odoo>
