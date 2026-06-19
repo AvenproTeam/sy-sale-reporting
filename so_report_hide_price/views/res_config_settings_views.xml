@@ -5,7 +5,7 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="sale.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//setting[@id='discount']" position="after">
+            <xpath expr="//setting[@id='discount_sale_order_lines']" position="after">
                 <setting id="hide_taxes_config" help="Hide tax information in PDFs and portal">
                     <field name="hide_taxes" />
                 </setting>
