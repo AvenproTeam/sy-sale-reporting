@@ -1,73 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- Copyright 2022 Manuel Regidor <manuel.regidor@sygel.es>
-     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <template
         id="so_report_hide_price_sale_order_portal_content"
         inherit_id="sale.sale_order_portal_content"
     >
-        <!--
-            Odoo 18 portal table structure for sale orders:
-            The table uses named th elements: th_product, th_qty, th_price,
-            th_discount, th_taxes, th_subtotal. Line rows loop with t-foreach="order_line".
-            The row condition changed from t-if='not line.display_type' to checking
-            line type directly. We target named th/td where possible.
-
-            NOTE: If the Odoo 18 portal template uses positional th selectors (no name attrs),
-            the xpaths below targeting named elements will need to be verified against the
-            actual template. The positional xpaths from Odoo 15 are replaced with named ones
-            where names exist, and positional where they don't.
-        -->
-
-        <!-- Header: Unit Price column -->
-        <xpath expr="//table[@id='sales_order_table']/thead/tr/th[@id='th_price']" position="attributes">
+        <xpath expr="//th[@name='th_priceunit']" position="attributes">
             <attribute name="t-if">sale_order.has_show_price_report_lines</attribute>
         </xpath>
-        <!-- Header: Discount column -->
-        <xpath expr="//table[@id='sales_order_table']/thead/tr/th[@id='th_discount']" position="attributes">
+        <xpath expr="//th[@t-if='display_discount']" position="attributes">
             <attribute name="t-if">display_discount and sale_order.has_show_price_report_lines</attribute>
         </xpath>
-        <!-- Header: Taxes column -->
-        <xpath expr="//table[@id='sales_order_table']/thead/tr/th[@id='th_taxes']" position="attributes">
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
             <attribute name="t-if">sale_order.has_show_price_report_lines or not sale_order.hide_tax_information</attribute>
         </xpath>
-        <!-- Header: Subtotal column -->
-        <xpath expr="//table[@id='sales_order_table']/thead/tr/th[@id='th_subtotal']" position="attributes">
+        <xpath expr="//th[@name='th_subtotal']" position="attributes">
             <attribute name="t-if">sale_order.has_show_price_report_lines</attribute>
         </xpath>
 
-        <!-- Line rows: Unit Price td -->
-        <xpath expr="//td[@id='td_price']" position="attributes">
+        <xpath expr="//td[@name='td_priceunit']" position="attributes">
             <attribute name="t-if">sale_order.has_show_price_report_lines</attribute>
         </xpath>
-        <xpath expr="//td[@id='td_price']/div[1]" position="attributes">
-            <attribute name="t-if">line.discount >= 0 and line.show_price_info_report</attribute>
-        </xpath>
-        <xpath expr="//td[@id='td_price']/div[2]" position="attributes">
-            <attribute name="t-if">line.discount and line.show_price_info_report</attribute>
-        </xpath>
-        <!-- Line rows: Discount td -->
-        <xpath expr="//td[@id='td_discount']" position="attributes">
-            <attribute name="t-if">display_discount and sale_order.has_show_price_report_lines</attribute>
-        </xpath>
-        <xpath expr="//td[@id='td_discount']/strong" position="attributes">
-            <attribute name="t-if">line.discount > 0 and line.show_price_info_report</attribute>
-        </xpath>
-        <!-- Line rows: Taxes td -->
-        <xpath expr="//td[@id='td_taxes']" position="attributes">
-            <attribute name="t-if">sale_order.has_show_price_report_lines or not sale_order.hide_tax_information</attribute>
-        </xpath>
-        <xpath expr="//td[@id='td_taxes']/span" position="attributes">
-            <attribute name="t-if">line.show_price_info_report or not sale_order.hide_tax_information</attribute>
-        </xpath>
-        <!-- Line rows: Subtotal td -->
-        <xpath expr="//td[@id='td_subtotal']" position="attributes">
-            <attribute name="t-if">sale_order.has_show_price_report_lines</attribute>
-        </xpath>
-        <xpath expr="//td[@id='td_subtotal']/span[1]" position="attributes">
+        <xpath expr="//td[@name='td_priceunit']//span[@t-field='line.price_unit']" position="attributes">
             <attribute name="t-if">line.show_price_info_report</attribute>
         </xpath>
-        <xpath expr="//td[@id='td_subtotal']/span[2]" position="attributes">
+
+        <xpath expr="//td[@t-if='display_discount']" position="attributes">
+            <attribute name="t-if">display_discount and sale_order.has_show_price_report_lines</attribute>
+        </xpath>
+        <xpath expr="//td[@t-if='display_discount']//span[@t-field='line.discount']" position="attributes">
+            <attribute name="t-if">line.show_price_info_report</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='td_taxes']" position="attributes">
+            <attribute name="t-if">sale_order.has_show_price_report_lines or not sale_order.hide_tax_information</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_taxes']//span" position="attributes">
+            <attribute name="t-if">line.show_price_info_report or not sale_order.hide_tax_information</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='td_subtotal']" position="attributes">
+            <attribute name="t-if">sale_order.has_show_price_report_lines</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='line.price_subtotal']" position="attributes">
+            <attribute name="t-if">line.show_price_info_report</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='line.price_total']" position="attributes">
             <attribute name="t-if">line.show_price_info_report</attribute>
         </xpath>
     </template>
