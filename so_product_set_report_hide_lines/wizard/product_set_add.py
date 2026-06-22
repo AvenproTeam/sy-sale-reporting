@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ProductSetAdd(models.TransientModel):
-    _inherit = "product.set.add"
+    _inherit = "sale.product.set.wizard"
 
     hide_set_lines = fields.Selection(
         string="Show Lines in Sales Report",
