@@ -7,8 +7,8 @@
         <field name="model">product.set</field>
         <field name="inherit_id" ref="sale_product_set.view_product_set_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='set_line_ids']/list/field[@name='product_id']" position="after">
-                <field name="show_line_report" optional="show" />
+            <xpath expr="//field[@name='set_line_ids']/list/field[@name='active']" position="before">
+                <field name="show_line_report" />
             </xpath>
         </field>
     </record>
