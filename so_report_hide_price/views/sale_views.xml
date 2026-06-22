@@ -19,7 +19,7 @@
                     string="Hide Lines Price Info in Report"
                 />
             </xpath>
-            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="after">
+            <xpath expr="//field[@name='order_line']/list" position="inside">
                 <field name="show_price_info_report" optional="show" />
             </xpath>
         </field>
